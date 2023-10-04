@@ -12,7 +12,7 @@ db = SQLAlchemy(app)
 
 with app.app_context():
     db.create_all()
-    
+
 app.app_context().push()
 
 class users(db.Model):
@@ -81,6 +81,10 @@ def logout():
         session.pop("user", None)
         session.pop("email", None)
         return redirect(url_for("login"))
+    
+@app.route("/view")
+def view():
+    return render_template("view.html", values=users.query.all())
 
 if __name__ == "__main__":
     app.run(debug=True)
